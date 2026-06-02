@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>Casablanca · Model Release Agreement</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { background:#050505; font-family:Arial,sans-serif; color:#eee; line-height:1.5; font-size:16px; min-height:100vh; display:flex; align-items:center; justify-content:center; padding:20px; }
+    .wrapper { max-width:1100px; width:100%; background:#0c0c0c; padding:40px; border-radius:28px; box-shadow:0 20px 40px rgba(0,0,0,0.8),0 0 0 1px #2a2a2a inset; }
+    h1,h2,h3 { color:#d4af37; font-weight:600; }
+    h1 { font-size:2rem; text-align:center; margin-bottom:0.5rem; }
+    h2 { font-size:1.8rem; margin-bottom:1.5rem; }
+    h3 { font-size:1.3rem; margin:1.8rem 0 0.8rem 0; }
+    p,ul { margin-bottom:1.2rem; color:#ddd; }
+    ul { padding-left:1.4rem; }
+    .logo-container { text-align:center; margin-bottom:25px; }
+    .logo { display:inline-block; max-width:70%; width:220px; border-radius:30px; background:rgba(255,255,255,0.02); padding:6px 0; font-size:1.4rem; font-weight:bold; color:#d4af37; text-decoration:none; }
+    .contract-id { text-align:center; color:#aaa; margin-bottom:30px; border-bottom:1px dashed #333; padding-bottom:18px; }
+    .prepared-header { background: #1a1a1a; padding: 15px 20px; border-radius: 16px; margin-bottom: 20px; border-left: 4px solid #d4af37; }
+    .prepared-header p { margin: 5px 0; color: #eee; }
+    .prepared-header strong { color: #d4af37; }
+    .intro-text { margin-bottom: 20px; font-style: italic; color: #ddd; }
+    .grid { display:grid; grid-template-columns:1fr 1fr; gap:30px 40px; margin-bottom:20px; }
+    .form-section { margin-top:30px; border-top:1px solid #333; padding-top:40px; }
+    input { width:100%; padding:14px 16px; margin-bottom:18px; background:#1e1e1e; border:1px solid #3a3a3a; border-radius:16px; color:#fff; font-size:1rem; }
+    input:focus { border-color:#d4af37; outline:none; background:#262626; }
+    canvas { background:#fcfcfc; border-radius:20px; width:100%; height:180px; cursor:crosshair; touch-action:none; border:2px solid #2d2d2d; }
+    button { background:#d4af37; border:none; padding:14px 24px; font-weight:700; font-size:1rem; border-radius:50px; cursor:pointer; margin-top:18px; margin-right:15px; color:#0c0c0c; transition:0.2s; box-shadow:0 6px 0 #9e8028; }
+    button:hover { background:#e8c253; transform:translateY(-2px); }
+    .success { display:none; opacity:0; margin-top:50px; padding:40px 30px; background:#121212; border:1px solid #d4af37; border-radius:40px; text-align:center; }
+    .success.show { display:block; opacity:1; }
+    .status-badge { background:#2a2a2a; display:inline-block; padding:6px 14px; border-radius:40px; font-size:0.8rem; margin-bottom:20px; color:#d4af37; }
+    iframe { display: none; }
+    .error-message { color: #ff8888; background: #330000; padding: 15px; border-radius: 12px; margin: 20px 0; }
+    @media screen and (max-width:800px) { body { padding:0; align-items:flex-start; } .wrapper { border-radius:0; padding:24px 20px; min-height:100vh; } .grid { grid-template-columns:1fr; gap:10px; } button { width:100%; margin-right:0; margin-bottom:12px; } }
+    @media print { body { background:white; } .wrapper { background:white; color:black; } button { display:none; } }
+  </style>
+</head>
+<body>
+<div class="wrapper" id="app">
+  <!-- dynamic content -->
+</div>
+
+<iframe name="hiddenFrame" id="hiddenFrame" style="display:none;"></iframe>
+
+<script>
+  // ==================== CONFIGURATION ====================
+  // 👇 REPLACE WITH YOUR DEPLOYED APPS SCRIPT URL
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw3h65J63kfEap5egZxmmfgrleyDOujjqO8RAUpNEgArM91Zni6gaillI7anhehq-vaxQ/exec';
+  
+  function getUrlParam(name) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(name);
+  }
+
+  let currentMode = 'model';
+  let currentContractId = null;
+  let modelData = null;
+
+  async function loadView() {
+    const idParam = getUrlParam('id');
+    const modeParam = getUrlParam('mode');
+    
+    if (idParam && modeParam === 'client') {
+      currentMode = 'client';
+      currentContractId = idParam;
+      await fetchModelDataJSONP(idParam);
+    } else {
+      currentMode = 'model';
+      renderModelForm();
+    }
+  }
+
+  function fetchModelDataJSONP(contractId) {
+    const appDiv = document.getElementById('app');
+    appDiv.innerHTML = '<div class="wrapper"><h2>Loading agreement...</h2></div>';
+    
+    const callbackName = 'jsonp_callback_' + Date.now();
+    window[callbackName] = function(result) {
+      delete window[callbackName];
+      document.body.removeChild(script);
+      if (result.status === 'success') {
+        modelData = result.data;
+        renderClientForm();
+      } else {
+        appDiv.innerHTML = `<div class="wrapper"><div class="error-message">Error: ${result.message || 'Invalid or expired link'}</div><p>Please contact Epic Models and Talent for assistance.</p></div>`;
+      }
+    };
+    
+    const url = `${APPS_SCRIPT_URL}?action=getModelData&id=${encodeURIComponent(contractId)}&callback=${callbackName}`;
+    const script = document.createElement('script');
+    script.src = url;
+    script.onerror = function() {
+      appDiv.innerHTML = `<div class="wrapper"><div class="error-message">Network error loading agreement. Please try again later.</div></div>`;
+      delete window[callbackName];
+    };
+    document.body.appendChild(script);
+  }
+
+  function renderModelForm() {
+    const contractID = `DM-${new Date().getFullYear()}${(new Date().getMonth()+1).toString().padStart(2,'0')}${new Date().getDate()}-${new Date().getTime().toString().slice(-4)}`;
+    currentContractId = contractID;
+    const html = `
+      <div class="logo-container"><div class="logo">Epic Models and Talent</div></div>
+      <h1>Model Release Agreement</h1>
+      <div class="contract-id">Contract ID: ${contractID}</div>
+      
+      <!-- Header exactly as requested -->
+      <div class="prepared-header">
+        <p><strong>Prepared for:</strong> <span id="preparedForName">[Model Name]</span></p>
+        <p><strong>Prepared by:</strong> Dulacka Media LLC</p>
+        <p><strong>Date:</strong> April 3, 2026</p>
+      </div>
+      
+      <!-- Introductory sentence -->
+      <div class="intro-text">
+        This Model Release Agreement is entered into between Dulacka Media LLC (Dulacka Media) and <span id="introModelName">[Model Name]</span> (Model), effective as of the date of signing this Agreement.
+      </div>
+      
+      <div class="grid">
+        <div>
+          <h3>1. Scope of Work</h3>
+          <p>Model is to be videoed and photographed by Dulacka Media on Tuesday April 7, 2026, from 11:00 am PDT through 1:00 pm PDT at the M Resort Spa Casino, located at 12300 Las Vegas Blvd S, Henderson, Nevada. The type of video and photography (Content) will be natural, unposed and posed moments of the Model enjoying the M Resort Spa Casino main pool area. Content is intended to be used on M Resort Spa Casino social media platforms, website, and digital displays. Model is responsible for hair, makeup, a two-piece black bikini, and appropriate pool area footwear. Model must arrive at the M Resort Spa Casino no later than 11:00 am PDT on Tuesday, April 7, 2026, ready to shoot.</p>
+          <h3>2. Scope of Release</h3>
+          <p>Subject only to the restrictions in paragraph 3, below, Model is granting Dulacka Media the unrestricted, irrevocable, and worldwide permission to use and publish the Content in whole or in part, with or without alterations, for any legal purpose, public or private. Model’s payment in exchange for this release is limited to that set forth in this Model Release Agreement and Dulacka Media will not provide any additional compensation to Model based on commercial success of use of any of the content.</p>
+          <h3>3. Limitations on Use</h3>
+          <p>Model’s release in paragraph 2, above, is restricted as to the items listed below:<br>
+          a. Model does not agree to alterations being made to the Content that would make the images appear to be pornographic, defamatory, or illegal<br>
+          b. Model does not agree to use of Model’s name in connection with the Content<br>
+          c. Model does not agree to use of any personal information of Model in connection with display or use of the Content</p>
+        </div>
+        <div>
+          <h3>4. Compensation</h3>
+          <p>In exchange for the releases given above in this Model Release Agreement, Model is to be paid compensation directly by EPIC Models & Talent. Payment is to be made at the completion of scope of work detailed in paragraph 1 above. Payment method is to be agreed on by Model and EPIC Models and Talent.</p>
+          <h3>5. Copyright</h3>
+          <p>Dulacka Media owns, and will retain all copyright interest in, the Content. Model has no ownership or intellectual property rights to the Content.</p>
+          <h3>6. Assignment</h3>
+          <p>Dulacka Media may assign Dulacka Media rights under this Model Release Agreement to a third-party (i.e., to a Dulacka Media Client) without restriction.</p>
+          <h3>7. Representations</h3>
+          <p>Model is a legally competent adult, 18 years of age or older, and has the right to legally enter into this Model Release Agreement.</p>
+          <h3>8. Other Terms</h3>
+          <p>THE PARTIES HAVE READ AND UNDERSTAND THE TERMS OF THIS MODEL RELEASE AGREEMENT ABOVE AND AGREE THAT IT IS THE ENTIRE AGREEMENT BETWEEN THE PARTIES AS TO THE PHOTOGRAPHY REFERENCED THEREIN.</p>
+          <p><strong>Executed this 3rd of April 2026.</strong></p>
+        </div>
+      </div>
+      <div class="form-section" id="formSection">
+        <h2>Model Information</h2>
+        <input type="text" id="modelName" placeholder="Full Legal Name *" oninput="updateModelName()">
+        <input type="email" id="modelEmail" placeholder="Email Address *">
+        <h3>Model Signature</h3>
+        <canvas id="signature-pad"></canvas>
+        <div><button onclick="clearSignature()">✕ Clear Signature</button> <button onclick="submitModel()">✓ Submit Agreement</button></div>
+      </div>
+      <div id="successMessage" class="success"><h2>Agreement Signed by Model</h2><p>A confirmation email has been sent to you. The client will now review and countersign. You will receive the final signed copy once completed.</p></div>
+    `;
+    document.getElementById('app').innerHTML = html;
+    setupSignaturePad('signature-pad');
+    
+    window.updateModelName = function() {
+      const nameInput = document.getElementById('modelName');
+      const name = nameInput.value.trim();
+      const preparedSpan = document.getElementById('preparedForName');
+      const introSpan = document.getElementById('introModelName');
+      if (preparedSpan) preparedSpan.innerText = name || '[Model Name]';
+      if (introSpan) introSpan.innerText = name || '[Model Name]';
+    };
+  }
+
+  function renderClientForm() {
+    const model = modelData;
+    const html = `
+      <div class="logo-container"><div class="logo">Epic Models and Talent</div></div>
+      <h1>Model Release Agreement</h1>
+      <div class="contract-id">Contract ID: ${model.contractID}</div>
+      <div class="status-badge">✓ Signed by Model on ${new Date(model.modelSignedDate).toLocaleString()}</div>
+      
+      <div class="prepared-header">
+        <p><strong>Prepared for:</strong> ${model.modelName}</p>
+        <p><strong>Prepared by:</strong> Dulacka Media LLC</p>
+        <p><strong>Date:</strong> April 3, 2026</p>
+      </div>
+      
+      <div class="intro-text">
+        This Model Release Agreement is entered into between Dulacka Media LLC (Dulacka Media) and ${model.modelName} (Model), effective as of the date of signing this Agreement.
+      </div>
+      
+      <div class="grid">
+        <div>
+          <h3>1. Scope of Work</h3>
+          <p>Model is to be videoed and photographed by Dulacka Media on Tuesday April 3, 2026, from 11:00 am PDT through 1:00 pm PDT at the M Resort Spa Casino, located at 12300 Las Vegas Blvd S, Henderson, Nevada. The type of video and photography (Content) will be natural, unposed and posed moments of the Model enjoying the M Resort Spa Casino main pool area. Content is intended to be used on M Resort Spa Casino social media platforms, website, and digital displays. Model is responsible for hair, makeup, a two-piece black bikini, and appropriate pool area footwear. Model must arrive at the M Resort Spa Casino no later than 11:00 am PDT on Tuesday, April 7, 2026, ready to shoot.</p>
+          <h3>2. Scope of Release</h3>
+          <p>Subject only to the restrictions in paragraph 3, below, Model is granting Dulacka Media the unrestricted, irrevocable, and worldwide permission to use and publish the Content in whole or in part, with or without alterations, for any legal purpose, public or private. Model’s payment in exchange for this release is limited to that set forth in this Model Release Agreement and Dulacka Media will not provide any additional compensation to Model based on commercial success of use of any of the content.</p>
+          <h3>3. Limitations on Use</h3>
+          <p>Model’s release in paragraph 2, above, is restricted as to the items listed below:<br>
+          a. Model does not agree to alterations being made to the Content that would make the images appear to be pornographic, defamatory, or illegal<br>
+          b. Model does not agree to use of Model’s name in connection with the Content<br>
+          c. Model does not agree to use of any personal information of Model in connection with display or use of the Content</p>
+        </div>
+        <div>
+          <h3>4. Compensation</h3>
+          <p>In exchange for the releases given above in this Model Release Agreement, Model is to be paid compensation directly by EPIC Models & Talent. Payment is to be made at the completion of scope of work detailed in paragraph 1 above. Payment method is to be agreed on by Model and EPIC Models and Talent.</p>
+          <h3>5. Copyright</h3>
+          <p>Dulacka Media owns, and will retain all copyright interest in, the Content. Model has no ownership or intellectual property rights to the Content.</p>
+          <h3>6. Assignment</h3>
+          <p>Dulacka Media may assign Dulacka Media rights under this Model Release Agreement to a third-party (i.e., to a Dulacka Media Client) without restriction.</p>
+          <h3>7. Representations</h3>
+          <p>Model is a legally competent adult, 18 years of age or older, and has the right to legally enter into this Model Release Agreement.</p>
+          <h3>8. Other Terms</h3>
+          <p>THE PARTIES HAVE READ AND UNDERSTAND THE TERMS OF THIS MODEL RELEASE AGREEMENT ABOVE AND AGREE THAT IT IS THE ENTIRE AGREEMENT BETWEEN THE PARTIES AS TO THE PHOTOGRAPHY REFERENCED THEREIN.</p>
+          <p><strong>Executed this 3rd of April 2026.</strong></p>
+        </div>
+      </div>
+      <div class="form-section" id="formSection">
+        <h2>Dulacka Media (Client) Signature</h2>
+        <p><strong>Model:</strong> ${model.modelName}<br><strong>Model Email:</strong> ${model.modelEmail}</p>
+        <h3>Authorized Signature for Dulacka Media LLC</h3>
+        <canvas id="signature-pad"></canvas>
+        <div><button onclick="clearSignature()">✕ Clear Signature</button> <button onclick="submitClient()">✓ Countersign Agreement</button></div>
+      </div>
+      <div id="successMessage" class="success"><h2>Agreement Fully Executed</h2><p>The signed agreement has been emailed to the model and to Dulacka Media. Thank you.</p></div>
+    `;
+    document.getElementById('app').innerHTML = html;
+    setupSignaturePad('signature-pad');
+  }
+
+  let canvas, ctx, drawing = false;
+  function setupSignaturePad(canvasId) {
+    canvas = document.getElementById(canvasId);
+    if (!canvas) return;
+    ctx = canvas.getContext('2d');
+    function resizeCanvas() {
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width;
+      canvas.height = rect.height;
+      ctx.lineWidth = 2.5;
+      ctx.lineCap = 'round';
+      ctx.strokeStyle = '#000';
+      ctx.fillStyle = '#fff';
+      ctx.fillRect(0,0,canvas.width,canvas.height);
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+    function getCoords(e) {
+      const rect = canvas.getBoundingClientRect();
+      let cx, cy;
+      if(e.touches) { cx = e.touches[0].clientX; cy = e.touches[0].clientY; }
+      else { cx = e.clientX; cy = e.clientY; }
+      return { x: cx - rect.left, y: cy - rect.top };
+    }
+    function start(e) { e.preventDefault(); drawing=true; ctx.beginPath(); const {x,y}=getCoords(e); ctx.moveTo(x,y); }
+    function stop() { drawing=false; ctx.beginPath(); }
+    function draw(e) { if(!drawing) return; e.preventDefault(); const {x,y}=getCoords(e); ctx.lineTo(x,y); ctx.stroke(); ctx.beginPath(); ctx.moveTo(x,y); }
+    canvas.addEventListener('mousedown',start); canvas.addEventListener('mouseup',stop); canvas.addEventListener('mouseout',stop); canvas.addEventListener('mousemove',draw);
+    canvas.addEventListener('touchstart',start,{passive:false}); canvas.addEventListener('touchend',stop); canvas.addEventListener('touchcancel',stop); canvas.addEventListener('touchmove',draw,{passive:false});
+    window.clearSignature = function() {
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      ctx.fillStyle='#fff';
+      ctx.fillRect(0,0,canvas.width,canvas.height);
+      ctx.beginPath();
+    };
+  }
+
+  window.submitModel = function() {
+    const name = document.getElementById('modelName').value.trim();
+    const email = document.getElementById('modelEmail').value.trim();
+    if (!name || !email) { alert('Please enter name and email.'); return; }
+    const signature = canvas.toDataURL();
+    if (signature.length < 2500) { alert('Please provide your signature.'); return; }
+
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = APPS_SCRIPT_URL;
+    form.target = 'hiddenFrame';
+    form.style.display = 'none';
+    const fields = {
+      action: 'submitModel',
+      contractID: currentContractId,
+      modelName: name,
+      modelEmail: email,
+      modelSignature: signature
+    };
+    for (const [key, val] of Object.entries(fields)) {
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = key;
+      input.value = val;
+      form.appendChild(input);
+    }
+    document.body.appendChild(form);
+    const iframe = document.getElementById('hiddenFrame');
+    iframe.onload = function() {
+      try {
+        let iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+        let responseText = iframeDoc.body.innerText;
+        if (responseText && responseText.startsWith("ERROR:")) {
+          alert("Server error:\n" + responseText);
+          form.remove();
+          return;
+        }
+      } catch(e) { console.log("Cannot read iframe response", e); }
+      document.getElementById('formSection').style.display = 'none';
+      document.getElementById('successMessage').classList.add('show');
+      form.remove();
+    };
+    form.submit();
+  };
+
+  window.submitClient = function() {
+    const signature = canvas.toDataURL();
+    if (signature.length < 2500) { alert('Please provide your signature.'); return; }
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = APPS_SCRIPT_URL;
+    form.target = 'hiddenFrame';
+    form.style.display = 'none';
+    const fields = {
+      action: 'submitClient',
+      contractID: currentContractId,
+      clientSignature: signature
+    };
+    for (const [key, val] of Object.entries(fields)) {
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = key;
+      input.value = val;
+      form.appendChild(input);
+    }
+    document.body.appendChild(form);
+    const iframe = document.getElementById('hiddenFrame');
+    iframe.onload = function() {
+      try {
+        let iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+        let responseText = iframeDoc.body.innerText;
+        if (responseText && responseText.startsWith("ERROR:")) {
+          alert("Server error:\n" + responseText);
+          form.remove();
+          return;
+        }
+      } catch(e) { console.log("Cannot read iframe response", e); }
+      document.getElementById('formSection').style.display = 'none';
+      document.getElementById('successMessage').classList.add('show');
+      form.remove();
+    };
+    form.submit();
+  };
+
+  loadView();
+</script>
+</body>
+</html>
