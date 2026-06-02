@@ -1,351 +1,1093 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>Casablanca · Model Release Agreement</title>
+  <!-- BLOCK 1 START: META / CONFIG -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EPIC Models & Talent | Model Agreement – EPIC Casablanca Shoot</title>
+  <meta name="description" content="EPIC Models & Talent model agreement and digital signature form for the EPIC Casablanca Shoot." />
+  <!-- BLOCK 1 END -->
+
+  <!-- BLOCK 2 START: STYLES -->
   <style>
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body { background:#050505; font-family:Arial,sans-serif; color:#eee; line-height:1.5; font-size:16px; min-height:100vh; display:flex; align-items:center; justify-content:center; padding:20px; }
-    .wrapper { max-width:1100px; width:100%; background:#0c0c0c; padding:40px; border-radius:28px; box-shadow:0 20px 40px rgba(0,0,0,0.8),0 0 0 1px #2a2a2a inset; }
-    h1,h2,h3 { color:#d4af37; font-weight:600; }
-    h1 { font-size:2rem; text-align:center; margin-bottom:0.5rem; }
-    h2 { font-size:1.8rem; margin-bottom:1.5rem; }
-    h3 { font-size:1.3rem; margin:1.8rem 0 0.8rem 0; }
-    p,ul { margin-bottom:1.2rem; color:#ddd; }
-    ul { padding-left:1.4rem; }
-    .logo-container { text-align:center; margin-bottom:25px; }
-    .logo { display:inline-block; max-width:70%; width:220px; border-radius:30px; background:rgba(255,255,255,0.02); padding:6px 0; font-size:1.4rem; font-weight:bold; color:#d4af37; text-decoration:none; }
-    .contract-id { text-align:center; color:#aaa; margin-bottom:30px; border-bottom:1px dashed #333; padding-bottom:18px; }
-    .prepared-header { background: #1a1a1a; padding: 15px 20px; border-radius: 16px; margin-bottom: 20px; border-left: 4px solid #d4af37; }
-    .prepared-header p { margin: 5px 0; color: #eee; }
-    .prepared-header strong { color: #d4af37; }
-    .intro-text { margin-bottom: 20px; font-style: italic; color: #ddd; }
-    .grid { display:grid; grid-template-columns:1fr 1fr; gap:30px 40px; margin-bottom:20px; }
-    .form-section { margin-top:30px; border-top:1px solid #333; padding-top:40px; }
-    input { width:100%; padding:14px 16px; margin-bottom:18px; background:#1e1e1e; border:1px solid #3a3a3a; border-radius:16px; color:#fff; font-size:1rem; }
-    input:focus { border-color:#d4af37; outline:none; background:#262626; }
-    canvas { background:#fcfcfc; border-radius:20px; width:100%; height:180px; cursor:crosshair; touch-action:none; border:2px solid #2d2d2d; }
-    button { background:#d4af37; border:none; padding:14px 24px; font-weight:700; font-size:1rem; border-radius:50px; cursor:pointer; margin-top:18px; margin-right:15px; color:#0c0c0c; transition:0.2s; box-shadow:0 6px 0 #9e8028; }
-    button:hover { background:#e8c253; transform:translateY(-2px); }
-    .success { display:none; opacity:0; margin-top:50px; padding:40px 30px; background:#121212; border:1px solid #d4af37; border-radius:40px; text-align:center; }
-    .success.show { display:block; opacity:1; }
-    .status-badge { background:#2a2a2a; display:inline-block; padding:6px 14px; border-radius:40px; font-size:0.8rem; margin-bottom:20px; color:#d4af37; }
-    iframe { display: none; }
-    .error-message { color: #ff8888; background: #330000; padding: 15px; border-radius: 12px; margin: 20px 0; }
-    @media screen and (max-width:800px) { body { padding:0; align-items:flex-start; } .wrapper { border-radius:0; padding:24px 20px; min-height:100vh; } .grid { grid-template-columns:1fr; gap:10px; } button { width:100%; margin-right:0; margin-bottom:12px; } }
-    @media print { body { background:white; } .wrapper { background:white; color:black; } button { display:none; } }
-  </style>
-</head>
-<body>
-<div class="wrapper" id="app">
-  <!-- dynamic content -->
-</div>
-
-<iframe name="hiddenFrame" id="hiddenFrame" style="display:none;"></iframe>
-
-<script>
-  // ==================== CONFIGURATION ====================
-  // 👇 REPLACE WITH YOUR DEPLOYED APPS SCRIPT URL
-  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyv8kZOdRPU0GxfHWz6KlxiKuQLkc263E0e9KK775xVqMcJtCHwD0WCdeP8QLsiw2a1ig/exec';
-  
-  function getUrlParam(name) {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get(name);
-  }
-
-  let currentMode = 'model';
-  let currentContractId = null;
-  let modelData = null;
-
-  async function loadView() {
-    const idParam = getUrlParam('id');
-    const modeParam = getUrlParam('mode');
-    
-    if (idParam && modeParam === 'client') {
-      currentMode = 'client';
-      currentContractId = idParam;
-      await fetchModelDataJSONP(idParam);
-    } else {
-      currentMode = 'model';
-      renderModelForm();
+    :root {
+      --epic-bg: #070707;
+      --epic-panel: rgba(255,255,255,0.065);
+      --epic-panel-strong: rgba(255,255,255,0.105);
+      --epic-text: #f8f5ef;
+      --epic-muted: rgba(248,245,239,0.76);
+      --epic-border: rgba(218, 174, 91, 0.34);
+      --epic-gold: #d9b66f;
+      --epic-gold-2: #f6d995;
+      --epic-red: #b21f2d;
+      --epic-success: #56d690;
+      --epic-danger: #ff6b6b;
+      --epic-radius: clamp(16px, 2vw, 28px);
+      --epic-max: 1040px;
+      --epic-shadow: 0 24px 80px rgba(0,0,0,0.58);
+      --epic-font: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      --epic-serif: Georgia, "Times New Roman", serif;
     }
-  }
 
-  function fetchModelDataJSONP(contractId) {
-    const appDiv = document.getElementById('app');
-    appDiv.innerHTML = '<div class="wrapper"><h2>Loading agreement...</h2></div>';
-    
-    const callbackName = 'jsonp_callback_' + Date.now();
-    window[callbackName] = function(result) {
-      delete window[callbackName];
-      document.body.removeChild(script);
-      if (result.status === 'success') {
-        modelData = result.data;
-        renderClientForm();
-      } else {
-        appDiv.innerHTML = `<div class="wrapper"><div class="error-message">Error: ${result.message || 'Invalid or expired link'}</div><p>Please contact Epic Models and Talent for assistance.</p></div>`;
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--epic-bg);
+    }
+
+    body {
+      margin: 0;
+      min-width: 260px;
+      color: var(--epic-text);
+      font-family: var(--epic-font);
+      background:
+        radial-gradient(circle at 16% 8%, rgba(217,182,111,0.20), transparent 28rem),
+        radial-gradient(circle at 88% 12%, rgba(178,31,45,0.20), transparent 30rem),
+        linear-gradient(135deg, #050505 0%, #111 54%, #070707 100%);
+      line-height: 1.58;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.08;
+      background-image:
+        linear-gradient(45deg, rgba(255,255,255,0.05) 25%, transparent 25%),
+        linear-gradient(-45deg, rgba(255,255,255,0.05) 25%, transparent 25%);
+      background-size: 18px 18px;
+      z-index: 0;
+    }
+
+    a { color: var(--epic-gold-2); }
+
+    .epic-shell {
+      position: relative;
+      z-index: 1;
+      width: min(var(--epic-max), calc(100% - clamp(24px, 5vw, 72px)));
+      margin-inline: auto;
+      padding: clamp(24px, 5vw, 60px) 0;
+    }
+
+    .epic-hero {
+      overflow: hidden;
+      border: 1px solid var(--epic-border);
+      border-radius: var(--epic-radius);
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.10), rgba(255,255,255,0.035)),
+        rgba(0,0,0,0.58);
+      box-shadow: var(--epic-shadow);
+      backdrop-filter: blur(18px);
+      padding: clamp(22px, 5vw, 54px);
+      text-align: center;
+      margin-bottom: clamp(18px, 3vw, 34px);
+    }
+
+    .epic-logo {
+      display: block;
+      width: clamp(118px, 18vw, 210px);
+      height: auto;
+      margin: 0 auto clamp(14px, 2.5vw, 24px);
+      object-fit: contain;
+      filter: drop-shadow(0 10px 28px rgba(0,0,0,0.55));
+    }
+
+    .epic-kicker {
+      margin: 0 0 8px;
+      color: var(--epic-gold-2);
+      font-size: clamp(0.72rem, 1.7vw, 0.86rem);
+      font-weight: 800;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-family: var(--epic-serif);
+      font-size: clamp(2rem, 5.5vw, 4.75rem);
+      line-height: 0.98;
+      letter-spacing: -0.045em;
+      text-wrap: balance;
+    }
+
+    .epic-subhead {
+      max-width: 720px;
+      margin: clamp(14px, 2vw, 22px) auto 0;
+      color: var(--epic-muted);
+      font-size: clamp(0.98rem, 2vw, 1.18rem);
+    }
+
+    .epic-status {
+      display: none;
+      margin: 18px auto 0;
+      max-width: 760px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.16);
+      padding: 10px 14px;
+      background: rgba(0,0,0,0.32);
+      color: var(--epic-muted);
+      font-size: 0.94rem;
+    }
+
+    .epic-status.is-active { display: block; }
+    .epic-status.is-error { border-color: rgba(255,107,107,0.45); color: #ffd5d5; }
+    .epic-status.is-success { border-color: rgba(86,214,144,0.45); color: #d7ffe8; }
+
+    .epic-card {
+      border: 1px solid var(--epic-border);
+      border-radius: var(--epic-radius);
+      background: var(--epic-panel);
+      box-shadow: var(--epic-shadow);
+      backdrop-filter: blur(18px);
+      padding: clamp(18px, 4vw, 38px);
+      margin-bottom: clamp(18px, 3vw, 30px);
+    }
+
+    .epic-card h2,
+    .epic-card h3 {
+      margin: 0 0 12px;
+      color: var(--epic-gold-2);
+      line-height: 1.16;
+    }
+
+    .epic-card h2 {
+      font-family: var(--epic-serif);
+      font-size: clamp(1.45rem, 3vw, 2.25rem);
+    }
+
+    .epic-card h3 {
+      margin-top: 24px;
+      font-size: clamp(1.05rem, 2vw, 1.25rem);
+    }
+
+    .epic-card p,
+    .epic-card li {
+      color: rgba(248,245,239,0.88);
+      font-size: clamp(0.95rem, 1.7vw, 1.02rem);
+    }
+
+    .epic-card ul {
+      padding-left: 1.25rem;
+    }
+
+    .epic-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(14px, 2.2vw, 22px);
+    }
+
+    @media (max-width: 720px) {
+      .epic-grid { grid-template-columns: 1fr; }
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    label {
+      color: var(--epic-gold-2);
+      font-weight: 800;
+      letter-spacing: 0.01em;
+      font-size: 0.94rem;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      min-height: 48px;
+      border: 1px solid rgba(217,182,111,0.28);
+      border-radius: 14px;
+      background: rgba(0,0,0,0.46);
+      color: var(--epic-text);
+      padding: 12px 14px;
+      font: inherit;
+      outline: none;
+    }
+
+    textarea {
+      min-height: 92px;
+      resize: vertical;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      border-color: rgba(246,217,149,0.80);
+      box-shadow: 0 0 0 4px rgba(217,182,111,0.13);
+    }
+
+    .help {
+      color: var(--epic-muted);
+      font-size: 0.88rem;
+    }
+
+    .required {
+      color: var(--epic-danger);
+      margin-left: 2px;
+    }
+
+    .checkbox-row {
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      gap: 10px;
+      align-items: start;
+      margin: 16px 0;
+      color: var(--epic-muted);
+    }
+
+    .checkbox-row input {
+      width: 20px;
+      min-height: 20px;
+      margin: 2px 0 0;
+      accent-color: var(--epic-gold);
+    }
+
+    .signature-wrap {
+      border: 1px solid rgba(217,182,111,0.32);
+      border-radius: 16px;
+      background: rgba(0,0,0,0.42);
+      padding: 12px;
+    }
+
+    canvas.signature-pad {
+      display: block;
+      width: 100%;
+      height: 220px;
+      border-radius: 12px;
+      background: #fff;
+      touch-action: none;
+      cursor: crosshair;
+    }
+
+    .signature-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 24px;
+    }
+
+    button,
+    .epic-btn {
+      appearance: none;
+      border: 0;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--epic-gold-2), var(--epic-gold));
+      color: #171009;
+      font-weight: 900;
+      letter-spacing: 0.025em;
+      text-transform: uppercase;
+      padding: 13px 22px;
+      cursor: pointer;
+      box-shadow: 0 16px 36px rgba(217,182,111,0.20);
+      transition: transform 160ms ease, box-shadow 160ms ease, opacity 160ms ease;
+    }
+
+    button:hover,
+    .epic-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 20px 46px rgba(217,182,111,0.30);
+    }
+
+    button:disabled {
+      opacity: 0.54;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .secondary-btn {
+      background: rgba(255,255,255,0.08);
+      color: var(--epic-text);
+      border: 1px solid rgba(255,255,255,0.18);
+      box-shadow: none;
+    }
+
+    .agreement-text {
+      max-height: 62vh;
+      overflow: auto;
+      padding-right: 8px;
+      scrollbar-color: var(--epic-gold) rgba(255,255,255,0.08);
+    }
+
+    .agreement-text hr {
+      border: 0;
+      border-top: 1px solid rgba(217,182,111,0.22);
+      margin: 24px 0;
+    }
+
+    .signature-summary {
+      display: grid;
+      gap: 10px;
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 16px;
+      background: rgba(0,0,0,0.32);
+      padding: 14px;
+      margin: 16px 0;
+    }
+
+    .signature-summary div {
+      color: var(--epic-muted);
+    }
+
+    .signature-summary strong {
+      color: var(--epic-text);
+    }
+
+    .mode-company-only,
+    .mode-model-only {
+      display: none;
+    }
+
+    body[data-mode="model"] .mode-model-only { display: block; }
+    body[data-mode="company"] .mode-company-only { display: block; }
+
+    .hidden { display: none !important; }
+
+    .footer-note {
+      text-align: center;
+      color: rgba(248,245,239,0.58);
+      font-size: 0.84rem;
+      padding: 16px 0 4px;
+    }
+
+    @media print {
+      body { background: #fff; color: #111; }
+      body::before,
+      .button-row,
+      .epic-status,
+      .signature-actions,
+      form > .epic-card:not(.print-include) { display: none !important; }
+      .epic-shell { width: 100%; padding: 0; }
+      .epic-card,
+      .epic-hero {
+        color: #111;
+        box-shadow: none;
+        border-color: #ccc;
+        background: #fff;
       }
-    };
-    
-    const url = `${APPS_SCRIPT_URL}?action=getModelData&id=${encodeURIComponent(contractId)}&callback=${callbackName}`;
-    const script = document.createElement('script');
-    script.src = url;
-    script.onerror = function() {
-      appDiv.innerHTML = `<div class="wrapper"><div class="error-message">Network error loading agreement. Please try again later.</div></div>`;
-      delete window[callbackName];
-    };
-    document.body.appendChild(script);
-  }
+      .agreement-text {
+        max-height: none;
+        overflow: visible;
+      }
+    }
+  </style>
+  <!-- BLOCK 2 END -->
+</head>
 
-  function renderModelForm() {
-    const contractID = `DM-${new Date().getFullYear()}${(new Date().getMonth()+1).toString().padStart(2,'0')}${new Date().getDate()}-${new Date().getTime().toString().slice(-4)}`;
-    currentContractId = contractID;
-    const html = `
-      <div class="logo-container"><div class="logo">Epic Models and Talent</div></div>
-      <h1>Model Release Agreement</h1>
-      <div class="contract-id">Contract ID: ${contractID}</div>
-      
-      <!-- Header exactly as requested -->
-      <div class="prepared-header">
-        <p><strong>Prepared for:</strong> <span id="preparedForName">[Model Name]</span></p>
-        <p><strong>Prepared by:</strong> Dulacka Media LLC</p>
-        <p><strong>Date:</strong> April 3, 2026</p>
+<body data-mode="model">
+  <!-- BLOCK 3 START: PAGE SHELL / HERO -->
+  <main class="epic-shell">
+    <section class="epic-hero">
+      <img class="epic-logo" src="https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/687edb257f24c671f43bb1cb.png" alt="EPIC Models & Talent logo" />
+      <p class="epic-kicker">Digital Model Agreement</p>
+      <h1>EPIC Casablanca Shoot</h1>
+      <p class="epic-subhead mode-model-only">
+        Please review the agreement, upload a photo of your government-issued ID for age verification, and sign below.
+      </p>
+      <p class="epic-subhead mode-company-only">
+        Company signature step. Review the model-submitted agreement details and sign to finalize.
+      </p>
+      <div id="status" class="epic-status"></div>
+    </section>
+    <!-- BLOCK 3 END -->
+
+    <!-- BLOCK 4 START: AGREEMENT TEXT -->
+    <section id="agreementForPdf" class="epic-card print-include">
+      <div class="agreement-text">
+        <h2>EPIC Models &amp; Talent LLC<br />Model Agreement – EPIC Casablanca Shoot</h2>
+
+        <p>
+          This Agreement is entered into by and between <strong>EPIC Models &amp; Talent LLC</strong>, a Nevada limited liability company
+          (“Company”), and the undersigned individual (“Model”).
+        </p>
+
+        <hr />
+
+        <h3>1. Shoot Information</h3>
+        <p><strong>Project Name:</strong> EPIC Casablanca Shoot</p>
+        <p><strong>Shoot Date:</strong> Tuesday, June 9</p>
+        <p>
+          <strong>Primary Location:</strong><br />
+          Casablanca<br />
+          2818 E. Quail Ave<br />
+          Las Vegas, NV 89120
+        </p>
+        <p>
+          <strong>Secondary Locations:</strong><br />
+          Additional shooting locations may include a gym, Pilates studio, yoga studio, or other fitness, wellness, or lifestyle venues as agreed upon by the Model and Company.
+        </p>
+
+        <h3>2. Scope of Work</h3>
+        <p>
+          Model agrees to participate in photo and/or video content creation for the EPIC Casablanca Shoot as directed by the Company.
+        </p>
+        <p>The total contracted work period shall be up to eight (8) hours, anticipated as follows:</p>
+        <ul>
+          <li>Approximately six (6) hours at Casablanca</li>
+          <li>Approximately two (2) hours at an additional fitness or wellness location</li>
+        </ul>
+        <p>
+          Actual production timing, locations, and scheduling may vary based upon creative, production, weather, operational requirements, or venue availability.
+        </p>
+
+        <h3>3. Compensation</h3>
+        <p>
+          Model shall be compensated at the <strong>previously agreed-upon day rate</strong> for participation in the EPIC Casablanca Shoot.
+        </p>
+        <p>
+          Model compensation shall be paid upon the Model’s arrival at the designated shoot location. Compensation covers the agreed booking period and all participation related to the shoot.
+        </p>
+        <p>Any extension of the booking period beyond the agreed schedule must be approved by the Company.</p>
+
+        <h3>4. Age &amp; Legal Eligibility</h3>
+        <p>
+          Given the nature of the wardrobe requirements, the Model represents and warrants that they are at least eighteen (18) years of age and possess the legal authority to enter into this Agreement.
+        </p>
+        <p>The Model agrees to present a valid, government-issued photo ID upon arrival at the shoot to verify their age and identity.</p>
+
+        <h3>5. Meals &amp; Transportation</h3>
+        <p><strong>Meals &amp; Drinks:</strong> The Company will provide a minimum of one (1) meal and drinks throughout the day.</p>
+        <p>
+          <strong>Transportation:</strong> The Model is responsible for their own transportation to the primary Casablanca location, as well as transportation between the primary location and any secondary fitness or wellness locations.
+        </p>
+
+        <h3>6. Wardrobe, Hair &amp; Makeup</h3>
+        <p>Hair and makeup services may be provided by the Company as needed.</p>
+        <p>The Model agrees to:</p>
+        <ul>
+          <li>Arrive at the designated call time fully prepared and ready to shoot.</li>
+          <li>Arrive in appropriate wardrobe with hair and makeup completed unless otherwise instructed.</li>
+          <li>Maintain a French manicure and French pedicure suitable for photography and video production.</li>
+        </ul>
+        <p>The following wardrobe items will be provided by the Company:</p>
+        <ul>
+          <li>Lingerie</li>
+          <li>Swimwear</li>
+        </ul>
+        <p>The Model agrees to bring the following items if available:</p>
+        <ul>
+          <li>One pair of black pumps</li>
+          <li>One pair of nude pumps</li>
+          <li>Additional heels, wedges, or footwear options</li>
+        </ul>
+        <p>The Model is encouraged to bring additional wardrobe and styling options, including but not limited to:</p>
+        <ul>
+          <li>Jewelry</li>
+          <li>Additional swimwear</li>
+          <li>Gowns</li>
+          <li>Dresses</li>
+          <li>Fitness apparel</li>
+        </ul>
+
+        <h3>7. Liability &amp; Personal Property</h3>
+        <p>
+          The Model acknowledges that they are voluntarily participating in this shoot, which may include fitness or lifestyle activities.
+        </p>
+        <p>
+          The Model assumes all risks associated with participation and holds the Company harmless for any personal injury, except to the extent caused by the Company’s gross negligence or willful misconduct.
+        </p>
+        <p>
+          The Company is not responsible for any loss, theft, or damage to the Model’s personal wardrobe, jewelry, equipment, phone, bags, or belongings brought to the set.
+        </p>
+
+        <h3>8. Professional Conduct</h3>
+        <p>
+          Model agrees to conduct themselves professionally throughout the duration of the production and to follow reasonable creative direction provided by the Company, photographer, videographer, and production staff.
+        </p>
+        <p>The Company is committed to maintaining a positive, respectful, and collaborative working environment.</p>
+        <p>
+          Any behavior deemed disruptive, hostile, unprofessional, disrespectful, unsafe, or unsupportive of fellow participants, staff, clients, or venue personnel may result in the Model being immediately removed from the shoot at the sole discretion of the Company.
+        </p>
+
+        <h3>9. Independent Contractor Status</h3>
+        <p>
+          Model acknowledges and agrees that they are participating as an independent contractor and not as an employee, partner, joint venturer, or representative of EPIC Models &amp; Talent LLC.
+        </p>
+        <p>The Model shall be solely responsible for any applicable federal, state, and local taxes or obligations arising from compensation received under this Agreement.</p>
+
+        <h3>10. Social Media &amp; Content Sharing</h3>
+        <p>Model agrees to the following social media requirements when posting any approved content from the EPIC Casablanca Shoot:</p>
+
+        <p><strong>1. Tagging &amp; Credit</strong></p>
+        <p>
+          Model agrees to tag or mention <strong>EPIC Models &amp; Talent</strong>, <strong>PB3 Productions</strong>, <strong>Casablanca Las Vegas</strong>, and any other required campaign partners when posting approved photos, videos, reels, stories, or other content from the shoot.
+        </p>
+
+        <p><strong>2. Proper Disclosure</strong></p>
+        <p>
+          If the post is sponsored, paid, promotional, gifted, or otherwise connected to compensation or business promotion, Model agrees to use clear disclosure such as <strong>“#ad,” “#sponsored,” “Paid partnership,”</strong> or any platform-required disclosure tool when applicable.
+        </p>
+
+        <p><strong>3. Share-Friendly Campaign Support</strong></p>
+        <p>
+          Model agrees to use reasonable, authentic calls to action when appropriate, such as asking followers to save, share, tag a friend, or send the content to someone who may be interested.
+        </p>
+        <p>
+          Model shall not use spam, bots, fake engagement, mass unsolicited direct messages, misleading tactics, engagement pods, purchased followers, purchased views, or artificial engagement methods.
+        </p>
+
+        <p><strong>4. Usage &amp; Post Visibility</strong></p>
+        <p>Model agrees not to delete, hide, remove tags, or materially alter approved campaign-related posts.</p>
+        <p>
+          Model also grants the Company permission to repost, share, embed, display, and use approved campaign-related social media content for marketing, website, portfolio, advertising, social media, and promotional purposes.
+        </p>
+        <p>Failure to provide appropriate credit or follow approved posting requirements may result in the removal of content and/or affect future booking opportunities.</p>
+
+        <h3>11. Set Confidentiality &amp; Personal Recording Policy</h3>
+        <p>
+          To protect the privacy of participants, the creative process, and proprietary content, no Model shall capture, record, livestream, photograph, or distribute any behind-the-scenes footage, images, audio recordings, or other content from the shoot without prior written or verbal authorization from the Company.
+        </p>
+        <p>The use of personal cell phones, cameras, or recording devices for content creation on set is strictly prohibited unless expressly approved.</p>
+        <p>Unauthorized recording, photography, videography, livestreaming, or distribution of content may result in:</p>
+        <ul>
+          <li>Immediate removal from the production</li>
+          <li>Forfeiture of any unpaid compensation</li>
+          <li>Loss of access to final images and video content</li>
+          <li>Termination of future booking opportunities</li>
+        </ul>
+        <p>The Company reserves the right to require the immediate removal of any unauthorized content posted online.</p>
+        <p>
+          The Model acknowledges that all content created during the production is the exclusive property of the Company, PB3 Productions, Casablanca Las Vegas, and/or their authorized partners.
+        </p>
+        <p>
+          Any approved behind-the-scenes recording or personal social media content shall remain subject to the Company’s posting instructions, approval rights, tagging requirements, disclosure requirements, confidentiality rules, brand safety standards, and social media requirements set forth in this Agreement.
+        </p>
+
+        <h3>12. Release &amp; Usage Rights<br />Including Synthetic Media</h3>
+        <p>
+          Model grants EPIC Models &amp; Talent LLC, PB3 Productions, Casablanca Las Vegas, and their respective successors, assigns, licensees, affiliates, partners, clients, and marketing agencies the unrestricted, perpetual, irrevocable, worldwide, royalty-free right to photograph, film, record, edit, reproduce, publish, distribute, display, advertise, promote, license, and otherwise use the Model’s name, image, likeness, voice, appearance, photographs, video footage, and related media captured during the shoot.
+        </p>
+        <p>Such usage rights shall apply across all media formats now known or hereafter developed, including but not limited to:</p>
+        <ul>
+          <li>Advertising</li>
+          <li>Marketing</li>
+          <li>Social media</li>
+          <li>Websites</li>
+          <li>Print materials</li>
+          <li>Editorial content</li>
+          <li>Promotional campaigns</li>
+          <li>Portfolio use</li>
+          <li>Commercial use</li>
+          <li>Digital advertising</li>
+          <li>Email marketing</li>
+          <li>Press materials</li>
+          <li>Client presentations</li>
+          <li>Search engine optimization</li>
+          <li>AI discoverability</li>
+          <li>Structured data</li>
+          <li>Campaign landing pages</li>
+        </ul>
+
+        <p><strong>AI &amp; Synthetic Media</strong></p>
+        <p>
+          The Model expressly grants the Company the right to use the captured footage, likeness, photographs, video, and audio for integration into, or modification by, generative artificial intelligence programs, machine learning models, synthetic media tools, editing tools, image enhancement software, video enhancement software, and other digital production tools for the purpose of extending, enhancing, adapting, or promoting the marketing and advertising materials produced from this shoot.
+        </p>
+        <p>
+          The Company may use such tools for legitimate marketing, advertising, promotional, portfolio, editing, retouching, creative development, campaign enhancement, and content optimization purposes.
+        </p>
+        <p>
+          The Company agrees that it will not knowingly use the Model’s image, likeness, voice, or appearance in a derogatory, defamatory, obscene, pornographic, sexually explicit, hateful, misleading, or intentionally harmful manner.
+        </p>
+        <p>
+          The content may be used for the promotion of EPIC Models &amp; Talent LLC, PB3 Productions, Casablanca Las Vegas, the Casablanca property, and related hospitality, entertainment, lifestyle, fitness, modeling, talent, and marketing initiatives.
+        </p>
+        <p>
+          Model waives any right to inspect or approve final edited content and releases the Company and its partners from any claims arising from the lawful and authorized use of such content under this Agreement.
+        </p>
+
+        <h3>13. Usage Rights for Model-Posted Social Media Content</h3>
+        <p>
+          In addition to the release and usage rights granted for content captured during the shoot, Model grants EPIC Models &amp; Talent LLC, PB3 Productions, Casablanca Las Vegas, and their respective successors, assigns, licensees, affiliates, partners, clients, and marketing agencies the right to repost, share, embed, display, screenshot, archive, crop, resize, subtitle, caption, edit for format, promote, advertise, and otherwise use approved campaign-related social media content posted by the Model.
+        </p>
+        <p>This includes, but is not limited to:</p>
+        <ul>
+          <li>Model’s campaign posts</li>
+          <li>Stories</li>
+          <li>Reels</li>
+          <li>TikTok videos</li>
+          <li>Captions</li>
+          <li>Comments</li>
+          <li>Thumbnails</li>
+          <li>Screenshots</li>
+          <li>Social media handles</li>
+          <li>Profile name</li>
+          <li>Likeness</li>
+          <li>Voice</li>
+          <li>Approved public-facing campaign statements</li>
+        </ul>
+        <p>
+          Such rights may be used for organic social media, paid social media advertising, website galleries, campaign landing pages, blog posts, press materials, email marketing, client presentations, pitch decks, search engine optimization, AI discoverability, portfolio use, and promotional materials.
+        </p>
+        <p>
+          Unless otherwise agreed in writing, these rights shall continue for a period of twenty-four (24) months from the original posting date for paid advertising use and perpetually for organic social media reposting, website portfolio use, internal presentations, archived campaign materials, and non-paid promotional use.
+        </p>
+
+        <h3>14. Cancellation &amp; Force Majeure</h3>
+        <p><strong>Model Cancellation</strong></p>
+        <p>
+          If the Model cancels within twenty-four (24) hours of the scheduled shoot time or fails to appear, the Company reserves the right to terminate future booking and representation opportunities at its sole discretion, and no compensation will be owed.
+        </p>
+
+        <p><strong>Company Cancellation / Weather</strong></p>
+        <p>
+          The Company reserves the right to postpone or cancel the shoot due to inclement weather, venue unavailability, acts of God, emergency, illness, safety concerns, operational restrictions, or other unforeseen circumstances.
+        </p>
+        <p>If the Company cancels the shoot prior to the Model’s call time, no compensation shall be owed to the Model, and all parties will work in good faith to reschedule.</p>
+
+        <h3>15. Governing Law</h3>
+        <p>This Agreement shall be governed by and construed in accordance with the laws of the State of Nevada.</p>
+        <p>Any legal action arising out of this Agreement shall be filed exclusively in the appropriate courts located in Clark County, Nevada.</p>
+
+        <h3>16. Entire Agreement</h3>
+        <p>This Agreement constitutes the entire understanding between the parties and supersedes all prior verbal or written agreements regarding this project.</p>
+        <p>Any modifications must be made in writing and signed by both parties.</p>
+
+        <h3>17. Agreement</h3>
+        <p>By signing below, both parties acknowledge that they have read, understood, and voluntarily agree to all terms contained in this Agreement.</p>
       </div>
-      
-      <!-- Introductory sentence -->
-      <div class="intro-text">
-        This Model Release Agreement is entered into between Dulacka Media LLC (Dulacka Media) and <span id="introModelName">[Model Name]</span> (Model), effective as of the date of signing this Agreement.
-      </div>
-      
-      <div class="grid">
-        <div>
-          <h3>1. Scope of Work</h3>
-          <p>Model is to be videoed and photographed by Dulacka Media on Tuesday April 7, 2026, from 11:00 am PDT through 1:00 pm PDT at the M Resort Spa Casino, located at 12300 Las Vegas Blvd S, Henderson, Nevada. The type of video and photography (Content) will be natural, unposed and posed moments of the Model enjoying the M Resort Spa Casino main pool area. Content is intended to be used on M Resort Spa Casino social media platforms, website, and digital displays. Model is responsible for hair, makeup, a two-piece black bikini, and appropriate pool area footwear. Model must arrive at the M Resort Spa Casino no later than 11:00 am PDT on Tuesday, April 7, 2026, ready to shoot.</p>
-          <h3>2. Scope of Release</h3>
-          <p>Subject only to the restrictions in paragraph 3, below, Model is granting Dulacka Media the unrestricted, irrevocable, and worldwide permission to use and publish the Content in whole or in part, with or without alterations, for any legal purpose, public or private. Model’s payment in exchange for this release is limited to that set forth in this Model Release Agreement and Dulacka Media will not provide any additional compensation to Model based on commercial success of use of any of the content.</p>
-          <h3>3. Limitations on Use</h3>
-          <p>Model’s release in paragraph 2, above, is restricted as to the items listed below:<br>
-          a. Model does not agree to alterations being made to the Content that would make the images appear to be pornographic, defamatory, or illegal<br>
-          b. Model does not agree to use of Model’s name in connection with the Content<br>
-          c. Model does not agree to use of any personal information of Model in connection with display or use of the Content</p>
-        </div>
-        <div>
-          <h3>4. Compensation</h3>
-          <p>In exchange for the releases given above in this Model Release Agreement, Model is to be paid compensation directly by EPIC Models & Talent. Payment is to be made at the completion of scope of work detailed in paragraph 1 above. Payment method is to be agreed on by Model and EPIC Models and Talent.</p>
-          <h3>5. Copyright</h3>
-          <p>Dulacka Media owns, and will retain all copyright interest in, the Content. Model has no ownership or intellectual property rights to the Content.</p>
-          <h3>6. Assignment</h3>
-          <p>Dulacka Media may assign Dulacka Media rights under this Model Release Agreement to a third-party (i.e., to a Dulacka Media Client) without restriction.</p>
-          <h3>7. Representations</h3>
-          <p>Model is a legally competent adult, 18 years of age or older, and has the right to legally enter into this Model Release Agreement.</p>
-          <h3>8. Other Terms</h3>
-          <p>THE PARTIES HAVE READ AND UNDERSTAND THE TERMS OF THIS MODEL RELEASE AGREEMENT ABOVE AND AGREE THAT IT IS THE ENTIRE AGREEMENT BETWEEN THE PARTIES AS TO THE PHOTOGRAPHY REFERENCED THEREIN.</p>
-          <p><strong>Executed this 3rd of April 2026.</strong></p>
-        </div>
-      </div>
-      <div class="form-section" id="formSection">
+    </section>
+    <!-- BLOCK 4 END -->
+
+    <!-- BLOCK 5 START: MODEL FORM -->
+    <form id="agreementForm" class="mode-model-only" method="post" action="https://script.google.com/macros/s/AKfycbyv8kZOdRPU0GxfHWz6KlxiKuQLkc263E0e9KK775xVqMcJtCHwD0WCdeP8QLsiw2a1ig/exec">
+      <input type="hidden" name="action" value="modelSubmit" />
+      <input type="hidden" name="agreementVersion" value="EPIC-CASABLANCA-2026-06-FINAL" />
+      <input type="hidden" name="modelSignatureDataUrl" id="modelSignatureDataUrl" />
+      <input type="hidden" name="idImageDataUrl" id="idImageDataUrl" />
+      <input type="hidden" name="idImageName" id="idImageName" />
+
+      <section class="epic-card">
         <h2>Model Information</h2>
-        <input type="text" id="modelName" placeholder="Full Legal Name *" oninput="updateModelName()">
-        <input type="email" id="modelEmail" placeholder="Email Address *">
-        <h3>Model Signature</h3>
-        <canvas id="signature-pad"></canvas>
-        <div><button onclick="clearSignature()">✕ Clear Signature</button> <button onclick="submitModel()">✓ Submit Agreement</button></div>
-      </div>
-      <div id="successMessage" class="success"><h2>Agreement Signed by Model</h2><p>A confirmation email has been sent to you. The client will now review and countersign. You will receive the final signed copy once completed.</p></div>
-    `;
-    document.getElementById('app').innerHTML = html;
-    setupSignaturePad('signature-pad');
-    
-    window.updateModelName = function() {
-      const nameInput = document.getElementById('modelName');
-      const name = nameInput.value.trim();
-      const preparedSpan = document.getElementById('preparedForName');
-      const introSpan = document.getElementById('introModelName');
-      if (preparedSpan) preparedSpan.innerText = name || '[Model Name]';
-      if (introSpan) introSpan.innerText = name || '[Model Name]';
-    };
-  }
+        <div class="epic-grid">
+          <div class="field">
+            <label for="modelName">Printed Legal Name <span class="required">*</span></label>
+            <input id="modelName" name="modelName" autocomplete="name" required />
+          </div>
 
-  function renderClientForm() {
-    const model = modelData;
-    const html = `
-      <div class="logo-container"><div class="logo">Epic Models and Talent</div></div>
-      <h1>Model Release Agreement</h1>
-      <div class="contract-id">Contract ID: ${model.contractID}</div>
-      <div class="status-badge">✓ Signed by Model on ${new Date(model.modelSignedDate).toLocaleString()}</div>
-      
-      <div class="prepared-header">
-        <p><strong>Prepared for:</strong> ${model.modelName}</p>
-        <p><strong>Prepared by:</strong> Dulacka Media LLC</p>
-        <p><strong>Date:</strong> April 3, 2026</p>
-      </div>
-      
-      <div class="intro-text">
-        This Model Release Agreement is entered into between Dulacka Media LLC (Dulacka Media) and ${model.modelName} (Model), effective as of the date of signing this Agreement.
-      </div>
-      
-      <div class="grid">
-        <div>
-          <h3>1. Scope of Work</h3>
-          <p>Model is to be videoed and photographed by Dulacka Media on Tuesday April 3, 2026, from 11:00 am PDT through 1:00 pm PDT at the M Resort Spa Casino, located at 12300 Las Vegas Blvd S, Henderson, Nevada. The type of video and photography (Content) will be natural, unposed and posed moments of the Model enjoying the M Resort Spa Casino main pool area. Content is intended to be used on M Resort Spa Casino social media platforms, website, and digital displays. Model is responsible for hair, makeup, a two-piece black bikini, and appropriate pool area footwear. Model must arrive at the M Resort Spa Casino no later than 11:00 am PDT on Tuesday, April 7, 2026, ready to shoot.</p>
-          <h3>2. Scope of Release</h3>
-          <p>Subject only to the restrictions in paragraph 3, below, Model is granting Dulacka Media the unrestricted, irrevocable, and worldwide permission to use and publish the Content in whole or in part, with or without alterations, for any legal purpose, public or private. Model’s payment in exchange for this release is limited to that set forth in this Model Release Agreement and Dulacka Media will not provide any additional compensation to Model based on commercial success of use of any of the content.</p>
-          <h3>3. Limitations on Use</h3>
-          <p>Model’s release in paragraph 2, above, is restricted as to the items listed below:<br>
-          a. Model does not agree to alterations being made to the Content that would make the images appear to be pornographic, defamatory, or illegal<br>
-          b. Model does not agree to use of Model’s name in connection with the Content<br>
-          c. Model does not agree to use of any personal information of Model in connection with display or use of the Content</p>
+          <div class="field">
+            <label for="dateOfBirth">Date of Birth <span class="required">*</span></label>
+            <input id="dateOfBirth" name="dateOfBirth" type="date" required />
+          </div>
+
+          <div class="field">
+            <label for="modelEmail">Email <span class="required">*</span></label>
+            <input id="modelEmail" name="modelEmail" type="email" autocomplete="email" required />
+          </div>
+
+          <div class="field">
+            <label for="modelPhone">Phone <span class="required">*</span></label>
+            <input id="modelPhone" name="modelPhone" type="tel" autocomplete="tel" required />
+          </div>
         </div>
-        <div>
-          <h3>4. Compensation</h3>
-          <p>In exchange for the releases given above in this Model Release Agreement, Model is to be paid compensation directly by EPIC Models & Talent. Payment is to be made at the completion of scope of work detailed in paragraph 1 above. Payment method is to be agreed on by Model and EPIC Models and Talent.</p>
-          <h3>5. Copyright</h3>
-          <p>Dulacka Media owns, and will retain all copyright interest in, the Content. Model has no ownership or intellectual property rights to the Content.</p>
-          <h3>6. Assignment</h3>
-          <p>Dulacka Media may assign Dulacka Media rights under this Model Release Agreement to a third-party (i.e., to a Dulacka Media Client) without restriction.</p>
-          <h3>7. Representations</h3>
-          <p>Model is a legally competent adult, 18 years of age or older, and has the right to legally enter into this Model Release Agreement.</p>
-          <h3>8. Other Terms</h3>
-          <p>THE PARTIES HAVE READ AND UNDERSTAND THE TERMS OF THIS MODEL RELEASE AGREEMENT ABOVE AND AGREE THAT IT IS THE ENTIRE AGREEMENT BETWEEN THE PARTIES AS TO THE PHOTOGRAPHY REFERENCED THEREIN.</p>
-          <p><strong>Executed this 3rd of April 2026.</strong></p>
+
+        <div class="field">
+          <label for="socialHandles">Social Media Handle(s)</label>
+          <textarea id="socialHandles" name="socialHandles" placeholder="@instagram, @tiktok, website, or other profile links"></textarea>
         </div>
-      </div>
-      <div class="form-section" id="formSection">
-        <h2>Dulacka Media (Client) Signature</h2>
-        <p><strong>Model:</strong> ${model.modelName}<br><strong>Model Email:</strong> ${model.modelEmail}</p>
-        <h3>Authorized Signature for Dulacka Media LLC</h3>
-        <canvas id="signature-pad"></canvas>
-        <div><button onclick="clearSignature()">✕ Clear Signature</button> <button onclick="submitClient()">✓ Countersign Agreement</button></div>
-      </div>
-      <div id="successMessage" class="success"><h2>Agreement Fully Executed</h2><p>The signed agreement has been emailed to the model and to Dulacka Media. Thank you.</p></div>
-    `;
-    document.getElementById('app').innerHTML = html;
-    setupSignaturePad('signature-pad');
-  }
 
-  let canvas, ctx, drawing = false;
-  function setupSignaturePad(canvasId) {
-    canvas = document.getElementById(canvasId);
-    if (!canvas) return;
-    ctx = canvas.getContext('2d');
-    function resizeCanvas() {
-      const rect = canvas.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
-      ctx.lineWidth = 2.5;
-      ctx.lineCap = 'round';
-      ctx.strokeStyle = '#000';
-      ctx.fillStyle = '#fff';
-      ctx.fillRect(0,0,canvas.width,canvas.height);
-    }
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-    function getCoords(e) {
-      const rect = canvas.getBoundingClientRect();
-      let cx, cy;
-      if(e.touches) { cx = e.touches[0].clientX; cy = e.touches[0].clientY; }
-      else { cx = e.clientX; cy = e.clientY; }
-      return { x: cx - rect.left, y: cy - rect.top };
-    }
-    function start(e) { e.preventDefault(); drawing=true; ctx.beginPath(); const {x,y}=getCoords(e); ctx.moveTo(x,y); }
-    function stop() { drawing=false; ctx.beginPath(); }
-    function draw(e) { if(!drawing) return; e.preventDefault(); const {x,y}=getCoords(e); ctx.lineTo(x,y); ctx.stroke(); ctx.beginPath(); ctx.moveTo(x,y); }
-    canvas.addEventListener('mousedown',start); canvas.addEventListener('mouseup',stop); canvas.addEventListener('mouseout',stop); canvas.addEventListener('mousemove',draw);
-    canvas.addEventListener('touchstart',start,{passive:false}); canvas.addEventListener('touchend',stop); canvas.addEventListener('touchcancel',stop); canvas.addEventListener('touchmove',draw,{passive:false});
-    window.clearSignature = function() {
-      ctx.clearRect(0,0,canvas.width,canvas.height);
-      ctx.fillStyle='#fff';
-      ctx.fillRect(0,0,canvas.width,canvas.height);
-      ctx.beginPath();
+        <div class="field">
+          <label for="idUpload">Government-Issued ID Upload <span class="required">*</span></label>
+          <input id="idUpload" name="idUpload" type="file" accept="image/*" required />
+          <div class="help">
+            Take a new photo of your ID or upload a current ID image already saved on your device. This is used for age and identity verification.
+          </div>
+        </div>
+
+        <div class="checkbox-row">
+          <input id="ageConfirm" name="ageConfirm" type="checkbox" value="Yes" required />
+          <label for="ageConfirm">I confirm that I am at least eighteen (18) years of age and have uploaded a valid government-issued ID for verification.</label>
+        </div>
+
+        <div class="checkbox-row">
+          <input id="agreementConfirm" name="agreementConfirm" type="checkbox" value="Yes" required />
+          <label for="agreementConfirm">I have read, understood, and voluntarily agree to the terms of this Agreement.</label>
+        </div>
+      </section>
+
+      <section class="epic-card">
+        <h2>Model Signature</h2>
+        <p class="help">Use your mouse, trackpad, finger, or stylus to sign below.</p>
+        <div class="signature-wrap">
+          <canvas id="modelSignaturePad" class="signature-pad" aria-label="Model signature pad"></canvas>
+          <div class="signature-actions">
+            <span class="help">Signature required before submission.</span>
+            <button type="button" class="secondary-btn" data-clear-signature="modelSignaturePad">Clear Signature</button>
+          </div>
+        </div>
+        <div class="button-row">
+          <button id="modelSubmitBtn" type="submit">Submit to EPIC for Signature</button>
+        </div>
+      </section>
+    </form>
+    <!-- BLOCK 5 END -->
+
+    <!-- BLOCK 6 START: COMPANY FORM -->
+    <form id="companyForm" class="mode-company-only" method="post" action="https://script.google.com/macros/s/AKfycbyv8kZOdRPU0GxfHWz6KlxiKuQLkc263E0e9KK775xVqMcJtCHwD0WCdeP8QLsiw2a1ig/exec">
+      <input type="hidden" name="action" value="companySign" />
+      <input type="hidden" name="recordId" id="recordId" />
+      <input type="hidden" name="token" id="token" />
+      <input type="hidden" name="companySignatureDataUrl" id="companySignatureDataUrl" />
+
+      <section class="epic-card">
+        <h2>Model Submission Summary</h2>
+        <div id="modelSummary" class="signature-summary">
+          <div>Loading model submission...</div>
+        </div>
+
+        <div class="epic-grid">
+          <div class="field">
+            <label for="companySignerName">EPIC Signer Name <span class="required">*</span></label>
+            <input id="companySignerName" name="companySignerName" autocomplete="name" required />
+          </div>
+
+          <div class="field">
+            <label for="companySignerTitle">EPIC Signer Title <span class="required">*</span></label>
+            <input id="companySignerTitle" name="companySignerTitle" required />
+          </div>
+        </div>
+      </section>
+
+      <section class="epic-card">
+        <h2>EPIC Models &amp; Talent Signature</h2>
+        <p class="help">Sign below to finalize the agreement. Both parties will be emailed the completed signed agreement.</p>
+        <div class="signature-wrap">
+          <canvas id="companySignaturePad" class="signature-pad" aria-label="Company signature pad"></canvas>
+          <div class="signature-actions">
+            <span class="help">Company signature required before finalization.</span>
+            <button type="button" class="secondary-btn" data-clear-signature="companySignaturePad">Clear Signature</button>
+          </div>
+        </div>
+        <div class="button-row">
+          <button id="companySubmitBtn" type="submit">Finalize Signed Agreement</button>
+        </div>
+      </section>
+    </form>
+    <!-- BLOCK 6 END -->
+
+    <!-- BLOCK 7 START: FOOTER -->
+    <p class="footer-note">EPIC Models &amp; Talent LLC · Digital Agreement</p>
+    <!-- BLOCK 7 END -->
+  </main>
+
+  <!-- BLOCK 8 START: JAVASCRIPT -->
+  <script>
+    const CONFIG = {
+      WEB_APP_URL: "https://script.google.com/macros/s/AKfycbyv8kZOdRPU0GxfHWz6KlxiKuQLkc263E0e9KK775xVqMcJtCHwD0WCdeP8QLsiw2a1ig/exec",
+      LOGO_URL: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/687edb257f24c671f43bb1cb.png"
     };
-  }
 
-  window.submitModel = function() {
-    const name = document.getElementById('modelName').value.trim();
-    const email = document.getElementById('modelEmail').value.trim();
-    if (!name || !email) { alert('Please enter name and email.'); return; }
-    const signature = canvas.toDataURL();
-    if (signature.length < 2500) { alert('Please provide your signature.'); return; }
+    const $ = (selector, root = document) => root.querySelector(selector);
 
-    const form = document.createElement('form');
-    form.method = 'POST';
-    form.action = APPS_SCRIPT_URL;
-    form.target = 'hiddenFrame';
-    form.style.display = 'none';
-    const fields = {
-      action: 'submitModel',
-      contractID: currentContractId,
-      modelName: name,
-      modelEmail: email,
-      modelSignature: signature
-    };
-    for (const [key, val] of Object.entries(fields)) {
-      const input = document.createElement('input');
-      input.type = 'hidden';
-      input.name = key;
-      input.value = val;
-      form.appendChild(input);
+    function showStatus(message, type = "") {
+      const status = $("#status");
+      status.textContent = message;
+      status.className = "epic-status is-active" + (type ? ` is-${type}` : "");
     }
-    document.body.appendChild(form);
-    const iframe = document.getElementById('hiddenFrame');
-    iframe.onload = function() {
+
+    function getParam(name) {
+      return new URLSearchParams(window.location.search).get(name);
+    }
+
+    function setModeFromUrl() {
+      const role = getParam("role");
+      const recordId = getParam("recordId");
+      const token = getParam("token");
+
+      if (role === "company" && recordId && token) {
+        document.body.dataset.mode = "company";
+        $("#recordId").value = recordId;
+        $("#token").value = token;
+        loadCompanySigningData(recordId, token);
+      } else {
+        document.body.dataset.mode = "model";
+      }
+    }
+
+    function jsonp(url, callbackName) {
+      return new Promise((resolve, reject) => {
+        const cb = callbackName || `jsonp_${Date.now()}_${Math.floor(Math.random() * 100000)}`;
+        const script = document.createElement("script");
+        window[cb] = (data) => {
+          delete window[cb];
+          script.remove();
+          resolve(data);
+        };
+        script.onerror = () => {
+          delete window[cb];
+          script.remove();
+          reject(new Error("Could not load signing data."));
+        };
+        const joiner = url.includes("?") ? "&" : "?";
+        script.src = `${url}${joiner}callback=${encodeURIComponent(cb)}`;
+        document.body.appendChild(script);
+      });
+    }
+
+    async function loadCompanySigningData(recordId, token) {
       try {
-        let iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-        let responseText = iframeDoc.body.innerText;
-        if (responseText && responseText.startsWith("ERROR:")) {
-          alert("Server error:\n" + responseText);
-          form.remove();
+        showStatus("Loading model submission for company signature...");
+        const data = await jsonp(`${CONFIG.WEB_APP_URL}?action=get&recordId=${encodeURIComponent(recordId)}&token=${encodeURIComponent(token)}`);
+        if (!data || !data.ok) {
+          throw new Error(data && data.message ? data.message : "Unable to load model submission.");
+        }
+
+        const record = data.record;
+        $("#modelSummary").innerHTML = `
+          <div><strong>Model:</strong> ${escapeHtml(record.modelName || "")}</div>
+          <div><strong>Date of Birth:</strong> ${escapeHtml(record.dateOfBirth || "")}</div>
+          <div><strong>Email:</strong> ${escapeHtml(record.modelEmail || "")}</div>
+          <div><strong>Phone:</strong> ${escapeHtml(record.modelPhone || "")}</div>
+          <div><strong>Social Handle(s):</strong> ${escapeHtml(record.socialHandles || "Not provided")}</div>
+          <div><strong>Model Signed:</strong> ${escapeHtml(record.modelSignedAt || "")}</div>
+        `;
+        showStatus("Model submission loaded. EPIC can now sign and finalize the agreement.", "success");
+      } catch (error) {
+        showStatus(error.message, "error");
+        $("#companySubmitBtn").disabled = true;
+      }
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function setupSignaturePad(canvasId) {
+      const canvas = document.getElementById(canvasId);
+      const ctx = canvas.getContext("2d");
+      let drawing = false;
+      let hasInk = false;
+      let last = null;
+
+      function resizeCanvas() {
+        const data = hasInk ? canvas.toDataURL("image/png") : null;
+        const rect = canvas.getBoundingClientRect();
+        const ratio = Math.max(window.devicePixelRatio || 1, 1);
+        canvas.width = Math.floor(rect.width * ratio);
+        canvas.height = Math.floor(rect.height * ratio);
+        ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+        ctx.lineCap = "round";
+        ctx.lineJoin = "round";
+        ctx.lineWidth = 2.6;
+        ctx.strokeStyle = "#111";
+
+        if (data) {
+          const img = new Image();
+          img.onload = () => ctx.drawImage(img, 0, 0, rect.width, rect.height);
+          img.src = data;
+        }
+      }
+
+      function pointFromEvent(event) {
+        const rect = canvas.getBoundingClientRect();
+        const touch = event.touches && event.touches[0] ? event.touches[0] : event;
+        return {
+          x: touch.clientX - rect.left,
+          y: touch.clientY - rect.top
+        };
+      }
+
+      function start(event) {
+        event.preventDefault();
+        drawing = true;
+        last = pointFromEvent(event);
+      }
+
+      function move(event) {
+        if (!drawing) return;
+        event.preventDefault();
+        const point = pointFromEvent(event);
+        ctx.beginPath();
+        ctx.moveTo(last.x, last.y);
+        ctx.lineTo(point.x, point.y);
+        ctx.stroke();
+        last = point;
+        hasInk = true;
+      }
+
+      function end(event) {
+        if (!drawing) return;
+        event.preventDefault();
+        drawing = false;
+      }
+
+      function clear() {
+        const rect = canvas.getBoundingClientRect();
+        ctx.clearRect(0, 0, rect.width, rect.height);
+        hasInk = false;
+      }
+
+      function isSigned() {
+        return hasInk;
+      }
+
+      function toDataUrl() {
+        return canvas.toDataURL("image/png");
+      }
+
+      window.addEventListener("resize", resizeCanvas);
+      canvas.addEventListener("mousedown", start);
+      canvas.addEventListener("mousemove", move);
+      window.addEventListener("mouseup", end);
+      canvas.addEventListener("touchstart", start, { passive: false });
+      canvas.addEventListener("touchmove", move, { passive: false });
+      canvas.addEventListener("touchend", end, { passive: false });
+
+      resizeCanvas();
+
+      return { clear, isSigned, toDataUrl };
+    }
+
+    const pads = {};
+
+    function setupClearButtons() {
+      document.querySelectorAll("[data-clear-signature]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const target = button.getAttribute("data-clear-signature");
+          if (pads[target]) pads[target].clear();
+        });
+      });
+    }
+
+    async function compressImageFile(file) {
+      const dataUrl = await readFileAsDataUrl(file);
+
+      if (!file.type.startsWith("image/")) {
+        throw new Error("Please upload an image file of your government-issued ID.");
+      }
+
+      const image = await loadImage(dataUrl);
+      const maxSide = 1600;
+      let { width, height } = image;
+
+      if (width > maxSide || height > maxSide) {
+        if (width > height) {
+          height = Math.round((height / width) * maxSide);
+          width = maxSide;
+        } else {
+          width = Math.round((width / height) * maxSide);
+          height = maxSide;
+        }
+      }
+
+      const canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(image, 0, 0, width, height);
+      return canvas.toDataURL("image/jpeg", 0.78);
+    }
+
+    function readFileAsDataUrl(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = () => reject(new Error("Could not read selected file."));
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function loadImage(src) {
+      return new Promise((resolve, reject) => {
+        const image = new Image();
+        image.onload = () => resolve(image);
+        image.onerror = () => reject(new Error("Could not process selected image."));
+        image.src = src;
+      });
+    }
+
+    function setupModelForm() {
+      const form = $("#agreementForm");
+      if (!form) return;
+
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        try {
+          if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+          }
+
+          if (!pads.modelSignaturePad.isSigned()) {
+            showStatus("Please sign the agreement before submitting.", "error");
+            return;
+          }
+
+          const fileInput = $("#idUpload");
+          if (!fileInput.files || !fileInput.files[0]) {
+            showStatus("Please upload or take a photo of your government-issued ID.", "error");
+            return;
+          }
+
+          showStatus("Preparing your agreement and ID image for secure submission...");
+          $("#modelSubmitBtn").disabled = true;
+
+          const idDataUrl = await compressImageFile(fileInput.files[0]);
+          $("#idImageDataUrl").value = idDataUrl;
+          $("#idImageName").value = fileInput.files[0].name || "model-id.jpg";
+          $("#modelSignatureDataUrl").value = pads.modelSignaturePad.toDataUrl();
+
+          showStatus("Submitting to EPIC Models & Talent...");
+          form.submit();
+        } catch (error) {
+          $("#modelSubmitBtn").disabled = false;
+          showStatus(error.message, "error");
+        }
+      });
+    }
+
+    function setupCompanyForm() {
+      const form = $("#companyForm");
+      if (!form) return;
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        if (!form.checkValidity()) {
+          form.reportValidity();
           return;
         }
-      } catch(e) { console.log("Cannot read iframe response", e); }
-      document.getElementById('formSection').style.display = 'none';
-      document.getElementById('successMessage').classList.add('show');
-      form.remove();
-    };
-    form.submit();
-  };
 
-  window.submitClient = function() {
-    const signature = canvas.toDataURL();
-    if (signature.length < 2500) { alert('Please provide your signature.'); return; }
-    const form = document.createElement('form');
-    form.method = 'POST';
-    form.action = APPS_SCRIPT_URL;
-    form.target = 'hiddenFrame';
-    form.style.display = 'none';
-    const fields = {
-      action: 'submitClient',
-      contractID: currentContractId,
-      clientSignature: signature
-    };
-    for (const [key, val] of Object.entries(fields)) {
-      const input = document.createElement('input');
-      input.type = 'hidden';
-      input.name = key;
-      input.value = val;
-      form.appendChild(input);
-    }
-    document.body.appendChild(form);
-    const iframe = document.getElementById('hiddenFrame');
-    iframe.onload = function() {
-      try {
-        let iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-        let responseText = iframeDoc.body.innerText;
-        if (responseText && responseText.startsWith("ERROR:")) {
-          alert("Server error:\n" + responseText);
-          form.remove();
+        if (!pads.companySignaturePad.isSigned()) {
+          showStatus("Please add the EPIC Models & Talent signature before finalizing.", "error");
           return;
         }
-      } catch(e) { console.log("Cannot read iframe response", e); }
-      document.getElementById('formSection').style.display = 'none';
-      document.getElementById('successMessage').classList.add('show');
-      form.remove();
-    };
-    form.submit();
-  };
 
-  loadView();
-</script>
+        $("#companySubmitBtn").disabled = true;
+        $("#companySignatureDataUrl").value = pads.companySignaturePad.toDataUrl();
+        showStatus("Finalizing signed agreement and emailing both parties...");
+        form.submit();
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      setModeFromUrl();
+      pads.modelSignaturePad = setupSignaturePad("modelSignaturePad");
+      pads.companySignaturePad = setupSignaturePad("companySignaturePad");
+      setupClearButtons();
+      setupModelForm();
+      setupCompanyForm();
+    });
+  </script>
+  <!-- BLOCK 8 END -->
 </body>
 </html>
