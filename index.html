@@ -341,15 +341,48 @@
 
     .agreement-text {
       column-count: 2;
-      column-gap: clamp(24px, 3vw, 40px);
-      text-align: justify;
+      column-gap: clamp(30px, 4vw, 56px);
+      text-align: left;
+      word-spacing: normal;
+      letter-spacing: normal;
+      hyphens: none;
+    }
+
+    .agreement-text h2,
+    .agreement-text h3,
+    .agreement-text p,
+    .agreement-text ul,
+    .agreement-text li,
+    .agreement-text hr {
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    .agreement-text p,
+    .agreement-text ul {
+      margin: 0 0 1.35rem;
+    }
+
+    .agreement-text ul {
+      padding-left: 1.35rem;
+    }
+
+    .agreement-text li {
+      margin: 0 0 0.48rem;
+    }
+
+    .agreement-text h2 {
+      margin: 0 0 1.2rem;
+    }
+
+    .agreement-text h3 {
+      margin: 1.8rem 0 0.8rem;
     }
 
     .agreement-text hr {
       border: 0;
       border-top: 1px solid rgba(217,182,111,0.22);
       margin: 24px 0;
-      break-inside: avoid;
     }
 
     .signature-summary {
@@ -424,6 +457,8 @@
       .agreement-text {
         max-height: none;
         column-count: 1;
+        column-gap: 0;
+        text-align: left;
       }
 
       .button-row {
@@ -1166,5 +1201,3 @@
   <!-- BLOCK 8 END -->
 </body>
 </html>
-
-
